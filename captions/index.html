@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M2 수련회 자막(PP7) 매뉴얼</title>
+  <style>
+    :root{
+      --bg:#0b0f19; --card:#121a2a; --muted:#9fb0cc; --text:#eaf0ff;
+      --accent:#7aa2ff; --ok:#37d67a; --warn:#ffcc66; --bad:#ff6b6b;
+      --border:rgba(255,255,255,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, #111a33 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    header{
+      padding:24px 16px 12px; position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,25,.92), rgba(11,15,25,.65));
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:0 12px 64px;}
+    h1{margin:0; font-size:20px; letter-spacing:.2px}
+    .sub{margin-top:8px; color:var(--muted); font-size:13px; line-height:1.4}
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:14px;
+    }
+    .search{
+      flex:1; min-width:220px;
+      display:flex; gap:8px; align-items:center;
+      background: rgba(255,255,255,.06); border:1px solid var(--border);
+      border-radius:12px; padding:10px 12px;
+    }
+    .search input{
+      flex:1; border:none; outline:none; background:transparent; color:var(--text);
+      font-size:14px;
+    }
+    .btn{
+      border:1px solid var(--border); background: rgba(255,255,255,.06);
+      color:var(--text); padding:10px 12px; border-radius:12px;
+      font-size:13px; cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.22)}
+    .pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--border); color:var(--muted);
+      background: rgba(255,255,255,.04);
+    }
+    .grid{
+      display:grid; grid-template-columns: 1fr; gap:12px; margin-top:16px;
+    }
+    @media(min-width:860px){ .grid{grid-template-columns: 1fr 1fr} }
+    .card{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:16px; padding:14px;
+    }
+    .card h2{margin:0 0 8px; font-size:15px}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    details{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px 14px;
+      margin-top:12px;
+    }
+    summary{
+      cursor:pointer; list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:700; font-size:14px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .meta{color:var(--muted); font-weight:500; font-size:12px}
+    .content{
+      margin-top:10px; color:var(--text); font-size:13px; line-height:1.6;
+    }
+    .content code{
+      background: rgba(122,162,255,.12);
+      border:1px solid rgba(122,162,255,.25);
+      padding:1px 6px; border-radius:8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:12px;
+    }
+    .list{margin:8px 0 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:6px 0}
+    .check{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.03);
+      border:1px dashed rgba(255,255,255,.12);
+      margin:8px 0;
+    }
+    .check input{margin-top:3px; transform:scale(1.1)}
+    .check .t{flex:1}
+    .tag-ok{color:var(--ok)}
+    .tag-warn{color:var(--warn)}
+    .tag-bad{color:var(--bad)}
+    .hr{height:1px; background:var(--border); margin:10px 0}
+    .small{font-size:12px; color:var(--muted)}
+    .kbd{
+      display:inline-block; padding:1px 6px; border-radius:6px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      font-size:12px; color:var(--text);
+    }
+    .toplinks{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .toplinks a{color:var(--text); text-decoration:none}
+    .linkbtn{
+      border:1px solid var(--border); background: rgba(255,255,255,.04);
+      padding:8px 10px; border-radius:12px; font-size:12px;
+    }
+    .linkbtn:hover{border-color:rgba(255,255,255,.22)}
+    @media print{
+      header{position:static; backdrop-filter:none}
+      body{background:white; color:black}
+      .card, details{background:white}
+      .btn, .search, .toplinks{display:none}
+      .meta, .sub, .small, .pill{color:#333}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>🖥️ M2 수련회 자막 매뉴얼 (ProPresenter 7 + 빔/스크린)</h1>
+    <div class="sub">
+      목표: (1) PP7 맥북 1대로 자막 안정 출력 (2) 베뉴 내장 빔 + 우리 컨피턴스용 빔/스크린 병행 (3) 젠더/케이블로 “현장 호환” 확보
+    </div>
+
+    <div class="toplinks">
+      <a class="linkbtn" href="../">← 홈</a>
+      <a class="linkbtn" href="../audio/">음향</a>
+      <a class="linkbtn" href="../lighting/">조명</a>
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        🔎 <input id="q" placeholder="검색: 예) PP7, HDMI, USB-C, 젠더, 이중출력, 해상도, 미러링, 오디오" />
+      </div>
+      <button class="btn" id="expand">모두 펼치기</button>
+      <button class="btn" id="collapse">모두 접기</button>
+      <button class="btn" id="print">인쇄(PDF)</button>
+      <button class="btn" id="reset">체크 초기화</button>
+      <span class="pill" id="progress">체크 0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card">
+      <h2>전체 구조(개념)</h2>
+      <p>
+        PP7 MacBook에서 <b>1) 베뉴 내장 빔</b>으로 메인 자막을 내보내고,
+        <b>2) 우리가 가져가는 컨피턴스용 빔/스크린</b>에는 필요 시 별도의 출력(미러링 또는 확장)을 사용한다.<br/>
+        운영 안전을 위해: <span class="tag-ok">“연결→화면 인식→PP7 출력 설정→리허설”</span> 순서를 고정한다.
+      </p>
+    </div>
+    <div class="card">
+      <h2>설정 원칙(안정성)</h2>
+      <ul class="list">
+        <li><span class="tag-ok">[원칙1]</span> 출력 포트/젠더를 <b>최소 구성</b>으로: USB-C → HDMI(권장) 또는 HDMI 직결</li>
+        <li><span class="tag-ok">[원칙2]</span> 발표/예배 중에는 <b>알림/절전 OFF</b>, 방해금지 ON</li>
+        <li><span class="tag-ok">[원칙3]</span> PP7은 “Audience(관객)” 화면만 빔으로, “Stage(스테이지)” 화면은 운영자 모니터로</li>
+        <li><span class="tag-warn">[원칙4]</span> 해상도/주사율 불일치가 가장 흔한 문제 → <b>1080p 60Hz</b> 기준으로 맞추기</li>
+        <li><span class="tag-warn">[원칙5]</span> 문제가 생기면: <b>케이블→젠더→디스플레이 설정→PP7 스크린 할당</b> 순서로 복구</li>
+      </ul>
+    </div>
+  </div>
+
+  <details open data-sec>
+    <summary>1) 현장 준비물(젠더/케이블) <span class="meta">“이게 없어서 망함” 방지</span></summary>
+    <div class="content">
+      <ul class="list">
+        <li><b>USB-C → HDMI</b> 어댑터(Apple Silicon 대비)</li>
+        <li><b>HDMI 케이블</b> 2개 이상(메인 + 컨피턴스)</li>
+        <li>(필요 시) <b>HDMI 연장</b> / <b>리피터</b>(거리 길면)</li>
+        <li>(상황 따라) USB-C → DisplayPort / Lightning 젠더(아이패드/폰 입력 필요 시)</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="c-kit"><div class="t">젠더/HDMI/연장선/멀티탭 준비 완료</div></div>
+      <div class="small">팁: HDMI는 생각보다 “접촉불량”이 잦아서 예비 1개는 필수.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>2) 물리 연결: 베뉴 빔 + 컨피
