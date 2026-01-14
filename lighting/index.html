@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M2 수련회 Lightkey+DMX 매뉴얼</title>
+  <style>
+    :root{
+      --bg:#0b0f19; --card:#121a2a; --muted:#9fb0cc; --text:#eaf0ff;
+      --accent:#7aa2ff; --ok:#37d67a; --warn:#ffcc66; --bad:#ff6b6b;
+      --border:rgba(255,255,255,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, #111a33 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    header{
+      padding:24px 16px 12px; position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,25,.92), rgba(11,15,25,.65));
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:0 12px 64px;}
+    h1{margin:0; font-size:20px; letter-spacing:.2px}
+    .sub{margin-top:8px; color:var(--muted); font-size:13px; line-height:1.4}
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:14px;
+    }
+    .search{
+      flex:1; min-width:220px;
+      display:flex; gap:8px; align-items:center;
+      background: rgba(255,255,255,.06); border:1px solid var(--border);
+      border-radius:12px; padding:10px 12px;
+    }
+    .search input{
+      flex:1; border:none; outline:none; background:transparent; color:var(--text);
+      font-size:14px;
+    }
+    .btn{
+      border:1px solid var(--border); background: rgba(255,255,255,.06);
+      color:var(--text); padding:10px 12px; border-radius:12px;
+      font-size:13px; cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.22)}
+    .pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--border); color:var(--muted);
+      background: rgba(255,255,255,.04);
+    }
+    .grid{
+      display:grid; grid-template-columns: 1fr; gap:12px; margin-top:16px;
+    }
+    @media(min-width:860px){ .grid{grid-template-columns: 1fr 1fr} }
+    .card{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:16px; padding:14px;
+    }
+    .card h2{margin:0 0 8px; font-size:15px}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    details{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px 14px;
+      margin-top:12px;
+    }
+    summary{
+      cursor:pointer; list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:700; font-size:14px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .meta{color:var(--muted); font-weight:500; font-size:12px}
+    .content{
+      margin-top:10px; color:var(--text); font-size:13px; line-height:1.6;
+    }
+    .content code{
+      background: rgba(122,162,255,.12);
+      border:1px solid rgba(122,162,255,.25);
+      padding:1px 6px; border-radius:8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:12px;
+    }
+    .list{margin:8px 0 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:6px 0}
+    .check{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.03);
+      border:1px dashed rgba(255,255,255,.12);
+      margin:8px 0;
+    }
+    .check input{margin-top:3px; transform:scale(1.1)}
+    .check .t{flex:1}
+    .tag-ok{color:var(--ok)}
+    .tag-warn{color:var(--warn)}
+    .tag-bad{color:var(--bad)}
+    .hr{height:1px; background:var(--border); margin:10px 0}
+    .small{font-size:12px; color:var(--muted)}
+    .kbd{
+      display:inline-block; padding:1px 6px; border-radius:6px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      font-size:12px; color:var(--text);
+    }
+    @media print{
+      header{position:static; backdrop-filter:none}
+      body{background:white; color:black}
+      .card, details{background:white}
+      .btn, .search{display:none}
+      .meta, .sub, .small, .pill{color:#333}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>🎛️ M2 수련회 조명 매뉴얼 (Lightkey + Wireless DMX + TD-17 킥 트리거)</h1>
+    <div class="sub">
+      목표: (1) 씬 5개 운영 (2) 킥 FX “화이트 팍!” (3) 씬은 계속 돌아가도록 레이어 방식 유지
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        🔎 <input id="q" placeholder="검색: 예) 주소, ENTTEC, MIDI, 킥모드, 트러블슈팅" />
+      </div>
+      <button class="btn" id="expand">모두 펼치기</button>
+      <button class="btn" id="collapse">모두 접기</button>
+      <button class="btn" id="print">인쇄(PDF)</button>
+      <button class="btn" id="reset">체크 초기화</button>
+      <span class="pill" id="progress">체크 0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card">
+      <h2>전체 구조 요약</h2>
+      <p>
+        <b>Mac(Lightkey)</b> → <b>ENTTEC DMX USB Pro</b> → <b>Wireless DMX TX</b> ⇒(무선)⇒ <b>RX-1(Wash 체인)</b>, <b>RX-2(Spot+Haze 체인)</b><br/>
+        킥 트리거는 <b>TD-17 USB MIDI</b> → Mac → Lightkey에서 <b>MIDI Learn</b>로 FX 실행.
+      </p>
+    </div>
+    <div class="card">
+      <h2>설정 원칙 (현장 안정성)</h2>
+      <ul class="list">
+        <li><span class="tag-ok">[원칙1]</span> 킥 FX는 <b>Intensity만</b> 건드린다 (색/팬틸트/고보 변경 금지)</li>
+        <li><span class="tag-ok">[원칙2]</span> Duration <b>80–150ms</b> (추천 100ms)</li>
+        <li><span class="tag-ok">[원칙3]</span> 중복 방지(Cooldown) <b>120–200ms</b></li>
+        <li><span class="tag-warn">[원칙4]</span> Haze는 킥 연동 금지(별도 ON/OFF)</li>
+        <li><span class="tag-warn">[원칙5]</span> MIDI가 죽어도 <b>씬 단축키(1~5)</b>로 예배 운영 가능하게 백업</li>
+      </ul>
+    </div>
+  </div>
+
+  <details open data-sec>
+    <summary>1) 설치 전 체크리스트 <span class="meta">전원/안전/장비 상태</span></summary>
+    <div class="content">
+      <div class="check"><input type="checkbox" data-k="pre-power"><div class="t"><b>전원/멀티탭/연장선</b> 확보(과부하 방지: 조명 전원 몰빵 금지)</div></div>
+      <div class="check"><input type="checkbox" data-k="pre-tape"><div class="t">바닥 케이블은 <b>가퍼테이프</b>로 고정(넘어짐 방지)</div></div>
+      <div class="check"><input type="checkbox" data-k="pre-gear"><div class="t">TX 1 / RX 2 / ENTTEC / 조명(Wash3 Spot2 Haze1) <b>전원 ON 확인</b></div></div>
+      <div class="small">팁: 조명 전원은 최소 2개 멀티탭으로 분산(무빙+헤이즈 전류 피크 대비)</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>2) 물리 연결: FOH(조명석) <span class="meta">Mac–ENTTEC–TX</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>MacBook 전원 연결(충전기 필수)</li>
+        <li><b>ENTTEC DMX USB Pro를 Mac에 직결</b>(허브 지양)</li>
+        <li>ENTTEC <b>DMX OUT</b> → Wireless DMX <b>TX</b>(DMX 케이블 1개)</li>
+        <li>TX 전원 ON, 가능한 <b>테이블 위/높은 위치</b> 배치</li>
+      </ol>
+      <div class="small">주의: TX를 금속 프레임/앰프/랙에 바짝 붙이면 링크가 불안정해질 수 있음</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>3) 물리 연결: 무대 <span class="meta">RX 2대 + 데이지체인</span></summary>
+    <div class="content">
+      <div class="hr"></div>
+      <b>RX-1 (Wash 체인)</b>
+      <ol class="list">
+        <li>RX-1 전원 ON</li>
+        <li>RX-1 DMX OUT → Wash1 DMX IN</li>
+        <li>Wash1 OUT → Wash2 IN → Wash2 OUT → Wash3 IN</li>
+      </ol>
+
+      <div class="hr"></div>
+      <b>RX-2 (Spot + Haze 체인)</b>
+      <ol class="list">
+        <li>RX-2 전원 ON</li>
+        <li>RX-2 DMX OUT → Spot1 IN → Spot1 OUT → Spot2 IN</li>
+        <li>Spot2 OUT → <b>Hazer IN (마지막)</b></li>
+      </ol>
+
+      <div class="hr"></div>
+      <b>DMX 규칙</b>
+      <ul class="list">
+        <li>OUT → IN 방향 준수</li>
+        <li>Y 분기 금지(직렬만)</li>
+        <li>가능하면 마지막에 Terminator(없어도 대부분 OK)</li>
+      </ul>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>4) 무선 DMX 링크(채널/그룹 맞추기) <span class="meta">TX/RX 동일 채널</span></summary>
+    <div class="content">
+      <p>
+        무선 DMX는 <b>TX와 RX가 같은 채널/그룹</b>이어야 신호를 받음.
+        제품에 따라 <b>버튼 방식</b> 또는 <b>DIP 스위치 방식</b>.
+      </p>
+
+      <b>버튼(채널/컬러) 방식</b>
+      <ol class="list">
+        <li>TX의 CH/MODE 버튼을 눌러 채널(색/번호)을 고정</li>
+        <li>RX-1도 같은 채널로 맞춤</li>
+        <li>RX-2도 같은 채널로 맞춤</li>
+        <li>RX의 Signal/Link LED가 <b>고정/빠른 점멸</b>이면 성공</li>
+        <li>안 되면 TX/RX 모두 전원 OFF→ON 후 반복</li>
+      </ol>
+
+      <b>DIP 스위치 방식</b>
+      <ol class="list">
+        <li>TX의 DIP ON/OFF 패턴을 정함</li>
+        <li>RX-1/2도 <b>완전히 동일하게</b> 맞춤</li>
+        <li>전원 OFF→ON(재부팅) 후 링크 확인</li>
+      </ol>
+
+      <div class="small">
+        링크 실패 시: RX를 TX 가까이(1~2m) 가져와 시도 → 되면 거리/장애물 문제. TX를 높게.
+      </div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>5) DMX 주소(Address) 설정 <span class="meta">겹치면 100% 꼬임</span></summary>
+    <div class="content">
+      <p>모드(채널 수)를 정확히 몰라도 <b>주소를 넉넉히 띄우면</b> 안전.</p>
+      <ul class="list">
+        <li>Wash1: <code>001</code>, Wash2: <code>021</code>, Wash3: <code>041</code></li>
+        <li>Spot1: <code>061</code>, Spot2: <code>081</code></li>
+        <li>Hazer: <code>101</code></li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="addr-done"><div class="t">모든 조명에서 <b>Start Address</b>가 위 값으로 세팅됨</div></div>
+      <div class="small">조명 메뉴에서 MENU → DMX → Address(Addr)로 들어가 설정하고 ENTER로 저장.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>6) Mac 기본 세팅(현장 안정화) <span class="meta">절전/알림/USB</span></summary>
+    <div class="content">
+      <div class="check"><input type="checkbox" data-k="mac-power"><div class="t">전원 연결 + 잠자기/화면꺼짐 최소화(현장에서는 사실상 OFF)</div></div>
+      <div class="check"><input type="checkbox" data-k="mac-dnd"><div class="t">방해금지(DND) ON / 알림 OFF</div></div>
+      <div class="check"><input type="checkbox" data-k="mac-usb"><div class="t">USB 액세서리 연결 허용 팝업 뜨면 <b>허용</b></div></div>
+      <div class="small">ENTTEC는 허브보다 직결이 가장 안정적. 인식 안 되면 포트 변경→재연결→재부팅(최후).</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>7) Lightkey: DMX Output 설정 <span class="meta">ENTTEC 선택이 핵심</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>Lightkey 실행</li>
+        <li>Preferences/Settings → <b>DMX Output</b></li>
+        <li>Interface에서 <b>ENTTEC DMX USB Pro</b> 선택</li>
+        <li>Universe = <b>1</b></li>
+        <li>Output Enable(출력) ON</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="lk-output"><div class="t">Lightkey에서 ENTTEC가 보이고 Output이 ON</div></div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>8) Lightkey: Patch(조명 등록) + 단품 테스트 <span class="meta">한 대씩 켜보기</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>Patch/Fixtures에서 Wash 3 / Spot 2 / Haze 1 추가</li>
+        <li>Universe=1, Address=001/021/041/061/081/101 입력</li>
+        <li>Live 화면에서 <b>한 대씩</b> Intensity 올려 반응 확인</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="test-wash"><div class="t">Wash 3대 각각 단품 테스트 OK</div></div>
+      <div class="check"><input type="checkbox" data-k="test-spot"><div class="t">Spot 2대 각각 단품 테스트 OK</div></div>
+      <div class="check"><input type="checkbox" data-k="test-haze"><div class="t">Hazer DMX 반응 OK(딜레이 있을 수 있음)</div></div>
+      <div class="small"><b>전부 안 되면</b>: Output/ENTTEC → 주소 일치 → TX/RX 링크 → DMX 방향(OUT→IN) 순서로 점검.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>9) 씬 5개 만들기 + 단축키 <span class="meta">운용자 운영 핵심</span></summary>
+    <div class="content">
+      <p>씬은 많을수록 실수. 5개면 예배 전체 커버 가능.</p>
+      <ul class="list">
+        <li><b>1 PRE</b>: 밝게/환영</li>
+        <li><b>2 WORSHIP</b>: 따뜻한 톤 + 무빙 최소</li>
+        <li><b>3 FAST</b>: 더 밝게 + 무빙 약간</li>
+        <li><b>4 SERMON</b>: 화이트 고정(눈부심 최소)</li>
+        <li><b>5 PRAYER</b>: 어둡게 + 백/사이드</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="scene-keys"><div class="t">씬 1~5에 단축키 <span class="kbd">1</span>~<span class="kbd">5</span> 할당 완료</div></div>
+      <div class="small">MIDI가 죽어도 <b>씬 단축키</b>만으로 예배 운영 가능해야 함(백업).</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>10) TD-17 킥 트리거: USB MIDI 연결 <span class="meta">킥=화이트 팍!</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>TD-17 USB(B) → Mac USB로 연결(가능하면 안정적인 케이블/허브)</li>
+        <li>macOS Audio MIDI Setup에서 TD-17 인식 확인(선택)</li>
+        <li>Lightkey에서 MIDI Input 장치로 TD-17 선택</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="midi-td17"><div class="t">Lightkey에서 TD-17 MIDI 입력이 잡힘</div></div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>11) 킥 FX 만들기 (씬 위 레이어) <span class="meta">Intensity only + 100ms</span></summary>
+    <div class="content">
+      <p>
+        목표: 씬은 유지되고, 킥이 들어오면 <b>전체(Wash+Spot) Intensity만 100ms</b> 올라갔다가 원복.
+      </p>
+      <ul class="list">
+        <li>FX 이름: <code>KICK_WHITE_POP</code></li>
+        <li>대상: Wash ALL + Spot ALL (Haze 제외)</li>
+        <li>변경값: Intensity 100% (가능하면 색은 건드리지 않거나 White)</li>
+        <li>Duration: 100ms</li>
+        <li>Cooldown: 120~200ms(가능한 경우)</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="kick-fx"><div class="t"><code>KICK_WHITE_POP</code> 생성 완료</div></div>
+
+      <div class="hr"></div>
+      <b>MIDI Learn로 킥에 매핑</b>
+      <ol class="list">
+        <li>FX/큐의 External Controls 또는 MIDI Assign 열기</li>
+        <li><b>MIDI Learn</b> 클릭</li>
+        <li>TD-17에서 킥 1번 밟기</li>
+        <li>이제 킥 입력 → FX 실행</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="kick-learn"><div class="t">킥 밟으면 “화이트 팍!” 동작 확인</div></div>
+
+      <div class="small">
+        킥이 너무 자주 터지면: (1) TD-17 킥 감도/스레숄드 조정 (2) Velocity 필터(가능 시) (3) Cooldown 늘리기.
+      </div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>12) KICK MODE ON/OFF (안전장치) <span class="meta">FAST에서만 ON</span></summary>
+    <div class="content">
+      <p>가장 중요한 사고 방지 장치: 설교/기도 때 킥이 터지면 분위기 깨짐.</p>
+      <ul class="list">
+        <li><b>KICK MODE ON</b>: FAST 찬양 시작할 때 켬</li>
+        <li><b>KICK MODE OFF</b>: FAST 곡 끝나면 끔 (Sermon/Prayer는 무조건 OFF)</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="kick-mode"><div class="t">운용자가 KICK MODE를 쉽게 켜고/끄는 방법(버튼/단축키/토글)을 확보함</div></div>
+      <div class="small">
+        구현은 환경마다 다르지만, 원칙은 “킥 입력을 받더라도 OFF일 땐 FX 실행이 안 되게” 만드는 것.
+        (가장 쉬운 백업은: OFF일 때는 MIDI Assign을 잠시 Disable/해제)
+      </div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>13) 운영 프로토콜(예배) <span class="meta">운용자/드러머 역할</span></summary>
+    <div class="content">
+      <b>운용자</b>
+      <ul class="list">
+        <li>씬 단축키 <span class="kbd">1</span>~<span class="kbd">5</span>로 분위기 전환</li>
+        <li>FAST 들어갈 때 KICK MODE ON, 끝나면 OFF</li>
+        <li>Haze는 별도 운영(킥 연동 금지)</li>
+      </ul>
+      <b>드러머</b>
+      <ul class="list">
+        <li>킥을 “후렴 첫 박/드랍/강세”에서 의도적으로</li>
+        <li>하이햇은 너무 잦아 비추천(눈 피로/과자극)</li>
+      </ul>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>14) 트러블슈팅(증상별) <span class="meta">현장 즉시 복구</span></summary>
+    <div class="content">
+      <b>A) 전체가 안 됨</b>
+      <ol class="list">
+        <li>Lightkey Output ON + ENTTEC 선택 확인</li>
+        <li>ENTTEC USB 재연결</li>
+        <li>TX/RX 링크 확인(채널 동일?)</li>
+        <li>DMX 체인 OUT→IN 확인</li>
+      </ol>
+      <b>B) 일부만 됨</b>
+      <ul class="list">
+        <li>해당 라인(RX-1 또는 RX-2) 링크/전원 문제 가능</li>
+        <li>해당 장비 Address/Mode 불일치 가능</li>
+      </ul>
+      <b>C) 킥이 씬을 바꿈</b>
+      <ul class="list">
+        <li>MIDI가 FX가 아니라 Scene에 매핑된 상태 → FX에만 매핑</li>
+      </ul>
+    </div>
+  </details>
+</div>
+
+<script>
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+  const checks = qsa('input[type="checkbox"][data-k]');
+  const secs = qsa('details[data-sec]');
+
+  function save(){
+    const obj = {};
+    checks.forEach(c => obj[c.dataset.k] = c.checked);
+    localStorage.setItem('m2_lightkey_manual_checks', JSON.stringify(obj));
+    updateProgress();
+  }
+  function load(){
+    try{
+      const obj = JSON.parse(localStorage.getItem('m2_lightkey_manual_checks') || "{}");
+      checks.forEach(c => c.checked = !!obj[c.dataset.k]);
+    }catch(e){}
+    updateProgress();
+  }
+  function updateProgress(){
+    const done = checks.filter(c => c.checked).length;
+    const total = checks.length || 1;
+    const pct = Math.round((done/total)*100);
+    qs('#progress').textContent = `체크 ${pct}% (${done}/${total})`;
+  }
+
+  checks.forEach(c => c.addEventListener('change', save));
+
+  qs('#expand').addEventListener('click', () => secs.forEach(d => d.open = true));
+  qs('#collapse').addEventListener('click', () => secs.forEach(d => d.open = false));
+  qs('#print').addEventListener('click', () => window.print());
+  qs('#reset').addEventListener('click', () => {
+    if(!confirm('체크를 초기화할까요?')) return;
+    checks.forEach(c => c.checked = false);
+    save();
+  });
+
+  qs('#q').addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
+    if(!term){
+      secs.forEach(d => d.style.display = '');
+      return;
+    }
+    secs.forEach(d => {
+      const text = d.innerText.toLowerCase();
+      d.style.display = text.includes(term) ? '' : 'none';
+    });
+  });
+
+  load();
+</script>
+</body>
+</html>
