@@ -188,4 +188,146 @@
   </details>
 
   <details data-sec>
-    <summary>2) 물리 연결: 베뉴 빔 + 컨피
+    <summary>2) 물리 연결: 베뉴 빔 + 컨피턴스 빔 <span class="meta">2출력 시나리오</span></summary>
+    <div class="content">
+      <p><b>시나리오 A (가장 단순/안정)</b>: 메인 자막은 베뉴 빔 1개만 사용. 컨피턴스 빔은 예비.</p>
+      <p><b>시나리오 B (2출력)</b>: 베뉴 빔 = Audience / 컨피턴스 빔 = Stage(또는 미러)로 운용.</p>
+
+      <div class="hr"></div>
+      <b>연결 순서(권장)</b>
+      <ol class="list">
+        <li>맥북 전원 연결 + 방해금지 ON</li>
+        <li>USB-C → HDMI 어댑터를 맥북에 연결</li>
+        <li>HDMI #1 → <b>베뉴 빔</b>(또는 벽 패널 입력)</li>
+        <li>HDMI #2 → <b>컨피턴스 빔</b>(우리가 가져온 빔)</li>
+        <li>빔 전원 ON → 입력 소스(HDMI1/HDMI2) 선택</li>
+      </ol>
+
+      <div class="check"><input type="checkbox" data-k="c-plug1"><div class="t">베뉴 빔에 화면 출력 확인</div></div>
+      <div class="check"><input type="checkbox" data-k="c-plug2"><div class="t">컨피턴스 빔(우리 빔)에 화면 출력 확인(사용 시)</div></div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>3) macOS 디스플레이 설정 <span class="meta">미러링/확장/해상도</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>macOS <b>시스템 설정 → 디스플레이</b>로 이동</li>
+        <li>외부 디스플레이(빔)가 1개/2개로 잡히는지 확인</li>
+        <li>권장: Audience를 메인 빔으로 확장(미러링 해제), 운영자는 맥북 화면 사용</li>
+        <li>해상도: 기본은 <b>1920×1080</b>, 주사율 <b>60Hz</b> 권장</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="c-display"><div class="t">디스플레이가 정상 인식 + 1080p 기준으로 안정화</div></div>
+      <div class="small">문제 시: 케이블 재연결 → 빔 입력 소스 확인 → 해상도 낮춰보기(720p) → 재부팅(최후)</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>4) ProPresenter 7 설정 <span class="meta">Audience/Stage Screen 할당</span></summary>
+    <div class="content">
+      <ol class="list">
+        <li>PP7 실행 → <b>Screens</b>(또는 환경설정) 메뉴</li>
+        <li><b>Audience Screen</b>을 “베뉴 빔(외부 디스플레이)”로 할당</li>
+        <li>(선택) <b>Stage Screen</b>을 “컨피턴스 빔”으로 할당하거나, 운영자 맥북 화면으로 둠</li>
+        <li>테스트: 슬라이드 2~3개 넘기며 글자 크기/여백 확인</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="c-pp7"><div class="t">Audience/Stage 화면 할당 완료 + 테스트 출력 OK</div></div>
+      <div class="small">권장: 글자 크기 크게(현장 시야), 흰 글자+검은 그림자/반투명 박스 등 가독성 우선.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>5) 운영 프로토콜(예배 중) <span class="meta">실수 방지</span></summary>
+    <div class="content">
+      <ul class="list">
+        <li>예배 시작 전: 첫 슬라이드 준비 + 전체 화면(Full Screen) 상태 확인</li>
+        <li>곡 전환: 다음 곡 1절 미리 띄워두고 <b>Go Live</b></li>
+        <li>설교: 본문/제목/포인트 슬라이드 순서 고정</li>
+        <li>문제 발생: “검정 화면” 또는 “배경 화면”으로 즉시 전환하는 비상 슬라이드 준비</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="c-run"><div class="t">비상(블랙/배경) 슬라이드 준비 + 단축키 확인</div></div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>6) 트러블슈팅 <span class="meta">현장 30초 복구</span></summary>
+    <div class="content">
+      <b>A) 빔에 “No Signal”</b>
+      <ol class="list">
+        <li>빔 입력 소스가 HDMI로 맞는지</li>
+        <li>HDMI/젠더 재삽입(끝까지)</li>
+        <li>macOS 디스플레이에서 외부 모니터 인식되는지</li>
+      </ol>
+
+      <div class="hr"></div>
+
+      <b>B) 화면이 나오는데 PP7 자막만 안 나옴</b>
+      <ul class="list">
+        <li>PP7에서 Audience Screen 할당이 바뀌었는지 확인</li>
+        <li>Full Screen/Output On 상태 확인</li>
+      </ul>
+
+      <div class="hr"></div>
+
+      <b>C) 글자가 너무 작거나 잘림</b>
+      <ul class="list">
+        <li>해상도 1080p로 고정</li>
+        <li>PP7 테마/세이프마진 조정</li>
+      </ul>
+    </div>
+  </details>
+</div>
+
+<script>
+  const STORAGE_KEY = "m2_captions_manual_checks";
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+  const checks = qsa('input[type="checkbox"][data-k]');
+  const secs = qsa('details[data-sec]');
+
+  function save(){
+    const obj = {};
+    checks.forEach(c => obj[c.dataset.k] = c.checked);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    updateProgress();
+  }
+  function load(){
+    try{
+      const obj = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      checks.forEach(c => c.checked = !!obj[c.dataset.k]);
+    }catch(e){}
+    updateProgress();
+  }
+  function updateProgress(){
+    const done = checks.filter(c => c.checked).length;
+    const total = checks.length || 1;
+    const pct = Math.round((done/total)*100);
+    qs('#progress').textContent = `체크 ${pct}% (${done}/${total})`;
+  }
+
+  checks.forEach(c => c.addEventListener('change', save));
+  qs('#expand').addEventListener('click', () => secs.forEach(d => d.open = true));
+  qs('#collapse').addEventListener('click', () => secs.forEach(d => d.open = false));
+  qs('#print').addEventListener('click', () => window.print());
+  qs('#reset').addEventListener('click', () => {
+    if(!confirm('체크를 초기화할까요?')) return;
+    checks.forEach(c => c.checked = false);
+    save();
+  });
+
+  qs('#q').addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
+    if(!term){
+      secs.forEach(d => d.style.display = '');
+      return;
+    }
+    secs.forEach(d => {
+      const text = d.innerText.toLowerCase();
+      d.style.display = text.includes(term) ? '' : 'none';
+    });
+  });
+
+  load();
+</script>
+</body>
+</html>
