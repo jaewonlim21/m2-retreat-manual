@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M2 수련회 음향 매뉴얼</title>
+  <style>
+    :root{
+      --bg:#0b0f19; --card:#121a2a; --muted:#9fb0cc; --text:#eaf0ff;
+      --accent:#7aa2ff; --ok:#37d67a; --warn:#ffcc66; --bad:#ff6b6b;
+      --border:rgba(255,255,255,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      background: radial-gradient(1200px 800px at 20% 0%, #111a33 0%, var(--bg) 55%);
+      color:var(--text);
+    }
+    header{
+      padding:24px 16px 12px; position:sticky; top:0; z-index:10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,25,.92), rgba(11,15,25,.65));
+      border-bottom:1px solid var(--border);
+    }
+    .wrap{max-width:980px; margin:0 auto; padding:0 12px 64px;}
+    h1{margin:0; font-size:20px; letter-spacing:.2px}
+    .sub{margin-top:8px; color:var(--muted); font-size:13px; line-height:1.4}
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:14px;
+    }
+    .search{
+      flex:1; min-width:220px;
+      display:flex; gap:8px; align-items:center;
+      background: rgba(255,255,255,.06); border:1px solid var(--border);
+      border-radius:12px; padding:10px 12px;
+    }
+    .search input{
+      flex:1; border:none; outline:none; background:transparent; color:var(--text);
+      font-size:14px;
+    }
+    .btn{
+      border:1px solid var(--border); background: rgba(255,255,255,.06);
+      color:var(--text); padding:10px 12px; border-radius:12px;
+      font-size:13px; cursor:pointer;
+    }
+    .btn:hover{border-color:rgba(255,255,255,.22)}
+    .pill{
+      font-size:12px; padding:6px 10px; border-radius:999px;
+      border:1px solid var(--border); color:var(--muted);
+      background: rgba(255,255,255,.04);
+    }
+    .grid{
+      display:grid; grid-template-columns: 1fr; gap:12px; margin-top:16px;
+    }
+    @media(min-width:860px){ .grid{grid-template-columns: 1fr 1fr} }
+    .card{
+      background: rgba(255,255,255,.04);
+      border:1px solid var(--border);
+      border-radius:16px; padding:14px;
+    }
+    .card h2{margin:0 0 8px; font-size:15px}
+    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    details{
+      background: rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px 14px;
+      margin-top:12px;
+    }
+    summary{
+      cursor:pointer; list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:700; font-size:14px;
+    }
+    summary::-webkit-details-marker{display:none}
+    .meta{color:var(--muted); font-weight:500; font-size:12px}
+    .content{
+      margin-top:10px; color:var(--text); font-size:13px; line-height:1.6;
+    }
+    .content code{
+      background: rgba(122,162,255,.12);
+      border:1px solid rgba(122,162,255,.25);
+      padding:1px 6px; border-radius:8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:12px;
+    }
+    .list{margin:8px 0 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:6px 0}
+    .check{
+      display:flex; align-items:flex-start; gap:10px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.03);
+      border:1px dashed rgba(255,255,255,.12);
+      margin:8px 0;
+    }
+    .check input{margin-top:3px; transform:scale(1.1)}
+    .check .t{flex:1}
+    .tag-ok{color:var(--ok)}
+    .tag-warn{color:var(--warn)}
+    .tag-bad{color:var(--bad)}
+    .hr{height:1px; background:var(--border); margin:10px 0}
+    .small{font-size:12px; color:var(--muted)}
+    .kbd{
+      display:inline-block; padding:1px 6px; border-radius:6px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.05);
+      font-size:12px; color:var(--text);
+    }
+    .toplinks{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .toplinks a{color:var(--text); text-decoration:none}
+    .linkbtn{
+      border:1px solid var(--border); background: rgba(255,255,255,.04);
+      padding:8px 10px; border-radius:12px; font-size:12px;
+    }
+    .linkbtn:hover{border-color:rgba(255,255,255,.22)}
+    @media print{
+      header{position:static; backdrop-filter:none}
+      body{background:white; color:black}
+      .card, details{background:white}
+      .btn, .search, .toplinks{display:none}
+      .meta, .sub, .small, .pill{color:#333}
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>🎚️ M2 수련회 음향 매뉴얼 (Wing Compact + AES50 + 무선 + PA)</h1>
+    <div class="sub">
+      목표: (1) 안정적인 입력/출력 (2) 무선 마이크/인이어 운용 (3) P16(악기) + P2(싱어) 모니터 (4) 문제 생겨도 예배는 “씬+메인 페이더”로 끝까지
+    </div>
+
+    <div class="toplinks">
+      <a class="linkbtn" href="../">← 홈</a>
+      <a class="linkbtn" href="../lighting/">조명</a>
+      <a class="linkbtn" href="../captions/">자막</a>
+    </div>
+
+    <div class="toolbar">
+      <div class="search">
+        🔎 <input id="q" placeholder="검색: 예) AES50, DL16, SD8, P16, P2, PA, 서브, 토크백, 클릭" />
+      </div>
+      <button class="btn" id="expand">모두 펼치기</button>
+      <button class="btn" id="collapse">모두 접기</button>
+      <button class="btn" id="print">인쇄(PDF)</button>
+      <button class="btn" id="reset">체크 초기화</button>
+      <span class="pill" id="progress">체크 0%</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <div class="card">
+      <h2>전체 구조(개념)</h2>
+      <p>
+        <b>Wing Compact</b>를 FOH(믹싱석)에 두고, 무대에는 <b>DL16(AES50-A)</b>, <b>SD8(AES50-B)</b>를 배치한다.<br/>
+        <span class="tag-ok">SD8은 악기 인풋 전용</span>으로 사용하고(무대 악기 라인 가까이), DL16은 무선/보컬/기타 필요한 라인을 받는다.<br/>
+        모니터: 악기는 <b>P16-M</b>(ULTRANET), 싱어는 <b>P2(유선 IEM)</b>로 보낸다.
+      </p>
+    </div>
+    <div class="card">
+      <h2>설정 원칙(안정성)</h2>
+      <ul class="list">
+        <li><span class="tag-ok">[원칙1]</span> FOH에서 나가는 메인 출력은 <b>Wing의 MAIN L/R(또는 Matrix)</b>로 관리</li>
+        <li><span class="tag-ok">[원칙2]</span> SD8/DL16 출력에 “PA를 직접 물려도” 되지만, <b>출력 라우팅을 문서화</b>해서 헷갈림 방지</li>
+        <li><span class="tag-ok">[원칙3]</span> 모니터는 “필요 최소 믹스” + “라벨링” (누가 어느 버스를 쓰는지)</li>
+        <li><span class="tag-warn">[원칙4]</span> AES50은 <b>CAT5e/6 이더넷 케이블처럼 생겼지만</b> 전용 오디오 네트워크. 공유기/인터넷과 혼동 금지</li>
+        <li><span class="tag-warn">[원칙5]</span> 문제 시 복구 순서: <b>전원</b>→<b>AES50 링크</b>→<b>라우팅</b>→<b>게인</b>→<b>PA</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <details open data-sec>
+    <summary>1) 설치 전 체크(전원/케이블/라벨) <span class="meta">10분</span></summary>
+    <div class="content">
+      <div class="check"><input type="checkbox" data-k="a-pre-power"><div class="t"><b>멀티탭/연장선</b> 확보(FOH / 무대 / PA 전원 분리)</div></div>
+      <div class="check"><input type="checkbox" data-k="a-pre-label"><div class="t">XLR/전원/AES50/ULTRANET 케이블에 <b>테이프 라벨</b>(A/B/IN/OUT 표시)</div></div>
+      <div class="check"><input type="checkbox" data-k="a-pre-wireless"><div class="t">무선 수신기/안테나(Phenyx) 설치 위치 확보: <b>무대 앞/FOH 근처</b>, 금속/벽 뒤 피하기</div></div>
+      <div class="small">팁: “안테나/무선 수신기”는 랙 뒤에 숨기면 수신률이 급락할 수 있음.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>2) AES50 연결(DL16/SD8) <span class="meta">CAT5e/6 케이블</span></summary>
+    <div class="content">
+      <p>
+        AES50 케이블은 일반 랜선처럼 보이지만, <b>오디오 네트워크</b>로 사용한다. 공유기/스위치에 꽂지 말 것.
+      </p>
+      <ol class="list">
+        <li>Wing Compact <b>AES50-A</b> ↔ <b>DL16</b> (CAT5e/6)</li>
+        <li>Wing Compact <b>AES50-B</b> ↔ <b>SD8</b> (CAT5e/6)</li>
+        <li>DL16/SD8에서 AES50 포트 LED/상태가 “LINK/OK”인지 확인</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="a-aes50-a"><div class="t">AES50-A ↔ DL16 링크 OK</div></div>
+      <div class="check"><input type="checkbox" data-k="a-aes50-b"><div class="t">AES50-B ↔ SD8 링크 OK</div></div>
+      <div class="small">링크 안 잡히면: 케이블 교체 → 포트 재삽입(딸깍) → DL16/SD8 재부팅 → Wing 재부팅(최후)</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>3) ULTRANET(P16) 연결 <span class="meta">악기 P16-M 분배</span></summary>
+    <div class="content">
+      <p>
+        P16 시스템은 <b>Wing의 ULTRANET</b>에서 나온다. 여기서 <b>P16-D(Distributor)</b>로 분배 후 각 <b>P16-M</b>에 CAT5e/6로 연결.
+      </p>
+      <ol class="list">
+        <li>Wing Compact <b>ULTRANET</b> → <b>P16-D IN</b> (CAT5e/6)</li>
+        <li>P16-D의 OUT 포트들 → 각 악기 자리 <b>P16-M</b> (CAT5e/6)</li>
+        <li>P16-M 전원(어댑터) 연결</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="a-ultranet"><div class="t">Wing ULTRANET → P16-D 연결 완료</div></div>
+      <div class="check"><input type="checkbox" data-k="a-p16m"><div class="t">각 P16-M 수신/전원 OK(레벨 미터 움직임)</div></div>
+      <div class="small">P16-D→P16-M 선도 “랜선처럼 생긴 CAT5e/6”. DMX랑 혼동 주의.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>4) 싱어 유선 IEM(P2) 연결 <span class="meta">XLR/AUX</span></summary>
+    <div class="content">
+      <p>
+        P2는 <b>유선 인이어 앰프</b>. 보통 <b>Wing의 Aux/Bus 출력</b>을 XLR/TRS로 받아서 P2에 넣는다.
+      </p>
+      <ul class="list">
+        <li>추천: Wing에서 <b>Bus(모니터 믹스)</b> 1~2개를 만들고 싱어에 배정</li>
+        <li>물리 연결: Wing의 XLR OUT(또는 스테이지박스 OUT) → (XLR) → P2 입력</li>
+        <li>가능하면 P2는 보컬 자리 근처(케이블 짧게), 바닥은 가퍼로 고정</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="a-p2-wire"><div class="t">P2 입력 라인 연결 + 볼륨 최소에서 시작(귀 보호)</div></div>
+      <div class="small">P2는 “메인 L/R”를 넣지 말고, 꼭 “싱어 모니터 버스”를 넣어야 함.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>5) 무선 마이크(Phenyx 8ch) + 안테나 시스템 <span class="meta">수신기→DL16</span></summary>
+    <div class="content">
+      <p>
+        무선 수신기 출력은 일반적으로 <b>XLR 밸런스 아웃</b>. 이 출력을 DL16의 인풋으로 받으면 FOH에서 채널로 뜬다.
+      </p>
+      <ol class="list">
+        <li>Phenyx 수신기 + 안테나 분배/연장 장치 설치(안테나는 무대 전면 시야 확보)</li>
+        <li>수신기 채널별 XLR OUT → <b>DL16 IN</b> (예: IN1~IN8)</li>
+        <li>Wing에서 해당 입력이 들어오는지 레벨 미터 확인</li>
+        <li>채널 이름 라벨: “WL HH1~7 / WL Headset” 등</li>
+      </ol>
+      <div class="check"><input type="checkbox" data-k="a-wl-xlr"><div class="t">무선 수신기 → DL16 인풋 연결 완료</div></div>
+      <div class="check"><input type="checkbox" data-k="a-wl-check"><div class="t">각 무선 마이크 “말하면” 미터 반응 확인</div></div>
+      <div class="small"><b>중요:</b> 무선은 “송신기/수신기” 주파수/그룹/채널이 맞아야 하며, 리허설 전에 배터리 확인.</div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>6) 메인/프론트필/서브(우퍼) 연결 <span class="meta">출력 라우팅</span></summary>
+    <div class="content">
+      <p>
+        원칙은 “FOH에서 컨트롤 가능한 출력”을 PA로 보내는 것.
+        장비 구성에 따라 메인 스피커가 “메인+우퍼 일체형 2개”라면, 보통 <b>메인 L/R</b>만 보내도 된다.
+      </p>
+      <ul class="list">
+        <li><b>메인 PA</b>: Wing MAIN L/R → (XLR) → 스피커 L/R</li>
+        <li><b>프론트필</b>(있다면): Matrix 1/2 또는 Bus로 별도 출력 → 프론트필 앰프/스피커</li>
+        <li><b>서브</b>(분리형일 때): Matrix/Sub Out → 서브 입력 (크로스오버는 스피커/프로세서 설정에 따름)</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="a-pa-main"><div class="t">메인 PA L/R 연결 완료 (볼륨 0에서 시작 → 천천히 올림)</div></div>
+      <div class="check"><input type="checkbox" data-k="a-pa-frontfill"><div class="t">프론트필(있다면) 별도 라우팅/출력 확인</div></div>
+      <div class="small">
+        “SD8 OUTPUT → PA”도 기술적으로 가능하지만, <b>출력 소스가 Wing에서 무엇으로 라우팅되는지</b> 문서화/고정해야 혼선이 없다.
+      </div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>7) 클릭/토크백 운영 <span class="meta">예배 안정용</span></summary>
+    <div class="content">
+      <ul class="list">
+        <li><b>클릭</b>: 드러머/악기 IEM에만 보내고 메인으로는 절대 안 나가게 (버스/매트릭스 체크)</li>
+        <li><b>토크백</b>: FOH 토크백 마이크를 “모니터 버스”에만 라우팅</li>
+        <li><b>안전</b>: 클릭/토크백은 라벨링 + 뮤트 버튼 위치 고정</li>
+      </ul>
+      <div class="check"><input type="checkbox" data-k="a-click"><div class="t">클릭이 IEM에만 들어가고 메인 PA에는 안 나옴</div></div>
+      <div class="check"><input type="checkbox" data-k="a-talkback"><div class="t">토크백이 모니터에만 들어가고 메인에는 안 나옴</div></div>
+    </div>
+  </details>
+
+  <details data-sec>
+    <summary>8) 빠른 트러블슈팅 <span class="meta">증상별 60초 복구</span></summary>
+    <div class="content">
+      <b>A) DL16/SD8 인풋이 안 들어옴</b>
+      <ol class="list">
+        <li>AES50 케이블 뽑았다 다시 꽂기(딸깍)</li>
+        <li>Wing에서 AES50-A/B 링크 상태 확인</li>
+        <li>스테이지박스 재부팅</li>
+      </ol>
+
+      <div class="hr"></div>
+
+      <b>B) P16-M에 아무것도 안 나옴</b>
+      <ul class="list">
+        <li>ULTRANET → P16-D → P16-M 케이블 확인</li>
+        <li>Wing에서 ULTRANET 채널 할당이 비어있지 않은지 확인</li>
+      </ul>
+
+      <div class="hr"></div>
+
+      <b>C) 메인 PA가 안 나옴</b>
+      <ul class="list">
+        <li>스피커 볼륨/전원 확인</li>
+        <li>Wing MAIN L/R 미터 확인</li>
+        <li>출력 라우팅이 올바른지(메인/매트릭스)</li>
+      </ul>
+
+      <div class="small">현장 규칙: 문제가 생기면 “작은 것부터” (전원/케이블/뮤트/페이더) 체크 후 라우팅으로.</div>
+    </div>
+  </details>
+</div>
+
+<script>
+  const STORAGE_KEY = "m2_audio_manual_checks";
+  const qs = s => document.querySelector(s);
+  const qsa = s => Array.from(document.querySelectorAll(s));
+  const checks = qsa('input[type="checkbox"][data-k]');
+  const secs = qsa('details[data-sec]');
+
+  function save(){
+    const obj = {};
+    checks.forEach(c => obj[c.dataset.k] = c.checked);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+    updateProgress();
+  }
+  function load(){
+    try{
+      const obj = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+      checks.forEach(c => c.checked = !!obj[c.dataset.k]);
+    }catch(e){}
+    updateProgress();
+  }
+  function updateProgress(){
+    const done = checks.filter(c => c.checked).length;
+    const total = checks.length || 1;
+    const pct = Math.round((done/total)*100);
+    qs('#progress').textContent = `체크 ${pct}% (${done}/${total})`;
+  }
+
+  checks.forEach(c => c.addEventListener('change', save));
+  qs('#expand').addEventListener('click', () => secs.forEach(d => d.open = true));
+  qs('#collapse').addEventListener('click', () => secs.forEach(d => d.open = false));
+  qs('#print').addEventListener('click', () => window.print());
+  qs('#reset').addEventListener('click', () => {
+    if(!confirm('체크를 초기화할까요?')) return;
+    checks.forEach(c => c.checked = false);
+    save();
+  });
+
+  qs('#q').addEventListener('input', (e) => {
+    const term = e.target.value.trim().toLowerCase();
+    if(!term){
+      secs.forEach(d => d.style.display = '');
+      return;
+    }
+    secs.forEach(d => {
+      const text = d.innerText.toLowerCase();
+      d.style.display = text.includes(term) ? '' : 'none';
+    });
+  });
+
+  load();
+</script>
+</body>
+</html>
